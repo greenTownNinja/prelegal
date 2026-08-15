@@ -1,0 +1,23 @@
+Everything in this directory is licensed under Creative Commons Attribution 4.0
+International (CC BY 4.0).
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+Summary: https://creativecommons.org/licenses/by/4.0/
+
+Source and attribution
+----------------------
+All markdown agreement templates in this directory are unmodified copies of the
+standard agreements published by Common Paper:
+
+    https://github.com/orgs/CommonPaper/repositories
+    https://commonpaper.com
+
+Common Paper agreements are free to use and modify under CC BY 4.0. Retrieved
+2026-08-15.
+
+Under CC BY 4.0 you may share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit to Common Paper, link to the
+license, and indicate if changes were made. Any modified version distributed from
+this project must carry that notice of changes.
+
+See ../catalog.json for the list of templates and the repository each came from.
