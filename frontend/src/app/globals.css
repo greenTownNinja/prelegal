@@ -10,9 +10,10 @@ body {
 }
 
 /*
- * Print / Save as PDF: the app chrome and the editing pane drop away, and the
- * preview pane becomes the whole page. `print-hidden` marks anything that is
- * screen-only; `print-document` marks the agreement itself.
+ * Browser printing (Cmd+P): the app chrome and the editing pane drop away, and
+ * the preview pane becomes the whole page. `print-hidden` marks anything that
+ * is screen-only; `print-document` marks the agreement itself. The Save as PDF
+ * button does not go through here — it builds a file directly (`lib/nda/pdf.ts`).
  */
 @media print {
   @page {
