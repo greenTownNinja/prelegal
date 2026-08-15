@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+}
+
+body {
+  @apply bg-slate-100 text-slate-900 antialiased;
+}
+
+/*
+ * Print / Save as PDF: the app chrome and the editing pane drop away, and the
+ * preview pane becomes the whole page. `print-hidden` marks anything that is
+ * screen-only; `print-document` marks the agreement itself.
+ */
+@media print {
+  @page {
+    margin: 20mm 18mm;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Undo the fixed-height app shell so the document can run onto many pages. */
+  .print-shell {
+    display: block !important;
+    height: auto !important;
+    max-width: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .print-document {
+    position: static !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Keep headings with their prose and never split a signature block. */
+  .print-keep-together {
+    break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+}
