@@ -11,8 +11,8 @@ import { coverPageSchema, type CoverPage } from "@/lib/nda/schema";
 
 /**
  * Owns the cover page state and puts the editor beside a live preview.
- * Printing goes through validation first, so an incomplete agreement can be
- * drafted on screen but never quietly printed.
+ * The button generates the agreement as a PDF file (see `lib/nda/pdf.ts`) and
+ * downloads it, rather than handing the user off to the browser print dialog.
  */
 export function NdaCreator() {
   const form = useForm<CoverPage>({
@@ -29,7 +29,14 @@ export function NdaCreator() {
   }, [setValue]);
 
   const cover = watch();
-  const print = handleSubmit(() => window.print());
+  // Validation runs first, so an incomplete agreement can be drafted on screen
+  // but never quietly downloaded.
+  // The PDF library is only needed once, on click, so it loads on demand rather
+  // than riding along with the initial page.
+  const download = handleSubmit(async (values) => {
+    const { downloadAgreementPdf } = await import("@/lib/nda/pdf");
+    downloadAgreementPdf(values);
+  });
 
   return (
     <div className="print-shell mx-auto flex max-w-7xl flex-col px-4 py-8 lg:h-screen">
@@ -38,21 +45,21 @@ export function NdaCreator() {
           <h1 className="text-2xl font-bold text-slate-900">Mutual NDA creator</h1>
           <p className="mt-1 text-sm text-slate-600">
             Fill in the cover page; the agreement on the right updates as you type. When it looks
-            right, print it or save it as a PDF.
+            right, download it as a PDF.
           </p>
         </div>
         <button
           type="button"
-          onClick={print}
+          onClick={download}
           className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
         >
-          Print / Save as PDF
+          Save as PDF
         </button>
       </header>
 
       {/* Each pane scrolls on its own so the form and the document stay side by side. */}
       <div className="grid min-h-0 flex-1 gap-8 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
-        <form className="print-hidden space-y-5 lg:h-full lg:overflow-y-auto lg:pr-2" onSubmit={print} noValidate>
+        <form className="print-hidden space-y-5 lg:h-full lg:overflow-y-auto lg:pr-2" onSubmit={download} noValidate>
           <CoverPageForm form={form} />
           <p className="text-xs text-slate-500">
             Prototype only — this generates a draft from a public template and is not legal advice.
